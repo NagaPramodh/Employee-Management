@@ -3,6 +3,7 @@ import { api } from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 import EmployeeTable from "../components/EmployeeTable";
 import EmployeeForm from "../components/EmployeeForm";
+import Modal from "../components/Modal";
 
 export default function Dashboard() {
   const [employees, setEmployees] = useState([]);
@@ -11,6 +12,7 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const { logout, user } = useContext(AuthContext);
   const filteredEmployees = employees.filter((emp) => {
@@ -60,7 +62,6 @@ export default function Dashboard() {
 
       <hr />
 
-      {/* Summary Cards */}
       <div style={{ display: "flex", gap: 20 }}>
         <div style={cardStyle}>
           <h3>Total Employees</h3>
@@ -100,15 +101,85 @@ export default function Dashboard() {
               <option value="inactive">Inactive</option>
             </select>
           </div>
+          <button
+            onClick={() => {
+              setEditingEmployee(null);
+              setShowModal(true);
+            }}
+          >
+            + Add Employee
+          </button>
+          {showModal && (
+            <Modal onClose={() => setShowModal(false)}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 20,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    borderBottom: "1px solid #e5e7eb",
+                    paddingBottom: 10,
+                  }}
+                >
+                  <h2
+                    style={{
+                      margin: 0,
+                      fontSize: 22,
+                      fontWeight: 600,
+                      color: "#111827",
+                    }}
+                  >
+                    {editingEmployee ? "Edit Employee" : "Add Employee"}
+                  </h2>
 
-          <EmployeeForm
-            onSave={handleSave}
-            editingEmployee={editingEmployee}
-            onCancel={() => setEditingEmployee(null)}
-          />
+                  <span
+                    onClick={() => setShowModal(false)}
+                    style={{
+                      fontSize: 22,
+                      cursor: "pointer",
+                      color: "#6b7280",
+                    }}
+                  >
+                    ✖
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    background: "#f9fafb",
+                    padding: 20,
+                    borderRadius: 10,
+                    boxShadow: "0 0 0 1px #e5e7eb",
+                  }}
+                >
+                  <EmployeeForm
+                    onSave={(emp) => {
+                      handleSave(emp);
+                      setShowModal(false);
+                    }}
+                    editingEmployee={editingEmployee}
+                    onCancel={() => {
+                      setEditingEmployee(null);
+                      setShowModal(false);
+                    }}
+                  />
+                </div>
+              </div>
+            </Modal>
+          )}
+
           <EmployeeTable
             employees={filteredEmployees}
-            onEdit={setEditingEmployee}
+            onEdit={(emp) => {
+              setEditingEmployee(emp);
+              setShowModal(true);
+            }}
             onDelete={(id) => {
               if (window.confirm("Delete this employee?")) {
                 setEmployees(employees.filter((e) => e.id !== id));

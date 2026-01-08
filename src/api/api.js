@@ -1,4 +1,4 @@
-const BASE_URL = "https://user-management.free.beeceptor.com"; // <-- replace with yours
+const BASE_URL = "https://user-management.free.beeceptor.com";
 
 export const api = {
   login: async (data) => {

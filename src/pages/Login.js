@@ -17,7 +17,6 @@ export default function Login() {
   const handleLogin = () => {
     setLoading(true);
     console.log(username, password, "Pramodh@28");
-    // simulate API delay
     setTimeout(() => {
       if (
         username === DEFAULT_USER.username &&
@@ -79,11 +78,11 @@ export default function Login() {
           {loading ? "Authenticating..." : "Login"}
         </button>
 
-        <p style={{ marginTop: 15, fontSize: 12, color: "#888" }}>
+        {/* <p style={{ marginTop: 15, fontSize: 12, color: "#888" }}>
           Demo Credentials: <br />
           Username: <b>Pramodh</b> <br />
           Password: <b>Pramodh@28</b>
-        </p>
+        </p> */}
       </div>
     </div>
   );
