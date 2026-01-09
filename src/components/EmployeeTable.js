@@ -26,10 +26,68 @@ export default function EmployeeTable({ employees, onEdit, onDelete }) {
             <td>{emp.dob}</td>
             <td>{emp.state}</td>
             <td>{emp.isActive ? "Active" : "Inactive"}</td>
-            <td>
-              <button onClick={() => onEdit(emp)}>Edit</button>
-              <button onClick={() => onDelete(emp.id)}>Delete</button>
-              <button onClick={() => window.print()}>Print</button>
+            <td
+              style={{
+                whiteSpace: "nowrap",
+                padding: "8px",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 8,
+                }}
+              >
+                <button
+                  onClick={() => onEdit(emp)}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#2563eb",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 500,
+                  }}
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => onDelete(emp.id)}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#dc2626",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 500,
+                  }}
+                >
+                  Delete
+                </button>
+
+                <button
+                  onClick={() => window.print()}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#059669",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 500,
+                  }}
+                >
+                  Print
+                </button>
+              </div>
             </td>
           </tr>
         ))}
